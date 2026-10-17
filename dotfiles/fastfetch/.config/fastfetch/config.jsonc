@@ -1,0 +1,34 @@
+ {
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/master/doc/json_schema.json",
+  "modules": [
+    "host",
+    "os",
+    "kernel",
+    "packages",
+    "shell",
+    "wm",
+    "terminal",
+    "break",
+    "display",
+    "gpu",
+    "cpu",
+    "memory",
+    "disk",
+    "localip",
+    "break",
+    {
+        "key": "OS Age",
+        "type": "disk",
+        "keyColor": "96",
+        "folders": "/",
+        "format": "{days} days ({create-time:10})"
+    },
+    "uptime"
+  ],
+  "logo": {
+        "color": {
+          "1": "#0b57a4",
+          "2": "#ffffff"
+        }
+    }
+}

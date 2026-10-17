@@ -1,0 +1,61 @@
+format = """
+[](fg:#2c313a)\
+$username$hostname\
+[](bg:#353b45 fg:#2c313a)\
+$directory\
+[](bg:#3e4451 fg:#353b45)\
+$git_branch$git_status\
+[](bg:#4b5263 fg:#3e4451)\
+$dotnet\
+[](bg:#ed8652 fg:#4b5263)\
+$time\
+[](fg:#ed8652)
+$character """
+
+[username]
+show_always = true
+format = "[ $user](fg:#abb2bf bg:#2c313a)"
+
+[hostname]
+ssh_only = false
+format = "[@$hostname ](fg:#abb2bf bg:#2c313a)"
+
+[directory]
+truncation_length = 3
+truncation_symbol = "…/"
+format = "[  $path ](fg:#abb2bf bg:#353b45)"
+
+[git_branch]
+symbol = " "
+truncation_length = 25
+truncation_symbol = "…"
+format = "[ $symbol$branch ](fg:#abb2bf bg:#3e4451)"
+
+[git_status]
+format = '([ $ahead_behind](fg:#B388FF bg:#3e4451))([ $modified$deleted$renamed$untracked](fg:#FF9248 bg:#3e4451))([ $staged](fg:#FF9248 bg:#3e4451))([ $stashed](fg:#abb2bf bg:#3e4451))'
+
+ahead = "⇡$count "
+behind = "⇣$count "
+diverged = "⇡$ahead_count⇣$behind_count "
+up_to_date = ""
+
+conflicted = " $count "
+stashed = "󰛴 $count "
+deleted = " $count "
+renamed = "󰑕 $count "
+modified = "󰄢 $count "
+staged = "󰄬 $count "
+untracked = "󰞋 $count "
+
+[dotnet]
+symbol = " "
+format = "[ $symbol$version ](fg:#abb2bf bg:#4b5263)"
+
+[time]
+disabled = false
+time_format = "%H:%M"
+format = "[  $time ](fg:#f8f8f2 bg:#ed8652)"
+
+[character]
+success_symbol = "[❯](fg:#61afef)"
+error_symbol = "[❯](fg:#e06c75)"
