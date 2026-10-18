@@ -18,3 +18,23 @@ kde_set() {
 
     kwriteconfig6 "${args[@]}" --key "${key}" "${value}"
 }
+
+# kde_applet_groups PLUGIN
+#
+# Prints the group path of the first Plasma widget with the given plugin id,
+# one group per word, e.g. "Containments 2 Applets 5". Returns 1 if the
+# widget is not in any panel or desktop.
+kde_applet_groups() {
+    local rc="${XDG_CONFIG_HOME:-${HOME}/.config}/plasma-org.kde.plasma.desktop-appletsrc"
+    local groups
+
+    [[ -f "${rc}" ]] || return 1
+
+    groups=$(awk -v plugin="plugin=$1" '
+        /^\[Containments\]\[[0-9]+\]\[Applets\]\[[0-9]+\]$/ { section = $0 }
+        $0 == plugin && section != "" { print section; exit }
+    ' "${rc}" | tr -d '[' | tr ']' ' ')
+
+    [[ -n "${groups}" ]] || return 1
+    echo "${groups}"
+}

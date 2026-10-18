@@ -13,6 +13,8 @@ source "${KDE_DIR}/../lib.sh"
 source "${KDE_DIR}/lib-kde.sh"
 # shellcheck source=virtual-desktops.sh
 source "${KDE_DIR}/virtual-desktops.sh"
+# shellcheck source=plasma-pager.sh
+source "${KDE_DIR}/plasma-pager.sh"
 # shellcheck source=keyboard-shortcuts.sh
 source "${KDE_DIR}/application-shortcuts.sh"
 # shellcheck source=window_management_shortcuts.sh
@@ -30,6 +32,7 @@ install_kde_settings() {
     confirm "Do you want to apply the KDE settings?" Y || return 0
 
     set_virtual_desktops
+    set_plasma_pager
     set_application_shortcuts
     set_window_management_shortcuts
 
