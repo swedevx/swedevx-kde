@@ -28,6 +28,7 @@ install_terminal() {
             ;;
         None)
             log_info "No terminal chosen!"
+            pkg_install_if_missing konsole
             ;;
         *)
             log_err "Unexpected choice: '$terminal'"

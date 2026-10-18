@@ -11,8 +11,12 @@ KDE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "${KDE_DIR}/../lib.sh"
 # shellcheck source=lib-kde.sh
 source "${KDE_DIR}/lib-kde.sh"
+# shellcheck source=virtual-desktops.sh
+source "${KDE_DIR}/virtual-desktops.sh"
 # shellcheck source=keyboard-shortcuts.sh
-source "${KDE_DIR}/keyboard-shortcuts.sh"
+source "${KDE_DIR}/application-shortcuts.sh"
+# shellcheck source=window_management_shortcuts.sh
+source "${KDE_DIR}/window-management-shortcuts.sh"
 
 # install_kde_settings
 #
@@ -25,7 +29,9 @@ install_kde_settings() {
 
     confirm "Do you want to apply the KDE settings?" Y || return 0
 
-    set_keyboard_shortcuts
+    set_virtual_desktops
+    set_application_shortcuts
+    set_window_management_shortcuts
 
     log_ok "KDE settings written. Log out and in again to apply them."
 }
