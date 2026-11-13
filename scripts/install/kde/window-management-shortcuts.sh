@@ -14,9 +14,9 @@ set_window_management_shortcuts() {
 
     kde_set kglobalshortcutsrc kwin "Window Close" 'Meta+C,Alt+F4,Close Window'
 
-    kde_set kglobalshortcutsrc kwin "Window to Desktop 1" 'Meta+Ctrl+!,none,Window to Desktop 1'
-    kde_set kglobalshortcutsrc kwin "Window to Desktop 2" 'Meta+Ctrl+",none,Window to Desktop 2'
-    kde_set kglobalshortcutsrc kwin "Window to Desktop 3" 'Meta+Ctrl+#,none,Window to Desktop 3'
-    kde_set kglobalshortcutsrc kwin "Window to Desktop 4" 'Meta+Ctrl+¤,none,Window to Desktop 4'
-    kde_set kglobalshortcutsrc kwin "Window to Desktop 5" 'Meta+Ctrl+%,none,Window to Desktop 5'
+    kde_set kglobalshortcutsrc kwin "Window to Desktop 1" 'Meta+Ctrl+Alt+1,none,Window to Desktop 1'
+    kde_set kglobalshortcutsrc kwin "Window to Desktop 2" 'Meta+Ctrl+Alt+2,none,Window to Desktop 2'
+    kde_set kglobalshortcutsrc kwin "Window to Desktop 3" 'Meta+Ctrl+Alt+3,none,Window to Desktop 3'
+    kde_set kglobalshortcutsrc kwin "Window to Desktop 4" 'Meta+Ctrl+Alt+4,none,Window to Desktop 4'
+    kde_set kglobalshortcutsrc kwin "Window to Desktop 5" 'Meta+Ctrl+Alt+5,none,Window to Desktop 5'
 }
