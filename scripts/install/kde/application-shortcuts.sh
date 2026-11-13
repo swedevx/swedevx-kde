@@ -24,7 +24,7 @@ set_terminal_shortcut() {
     fi
 
     if is_selected ghostty; then
-        kde_set kglobalshortcutsrc services com.mitchellh.ghostty.desktop _launch "Meta+ReturnT"
+        kde_set kglobalshortcutsrc services com.mitchellh.ghostty.desktop _launch "Meta+Return"
     fi
 
     # This is KDE's default terminal
