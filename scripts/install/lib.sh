@@ -378,6 +378,100 @@ choose_option() {
     done
 }
 
+# choose_multiple PROMPT OPTION...
+#
+# Shows a numbered menu where several options can be picked, and prints the
+# chosen options on stdout, one per line, in menu order.
+# Capture it with: picked=$(choose_multiple "Prompt" "[A]" "[B]" "C")
+#
+# Arguments:
+#   PROMPT  Heading shown above the menu.
+#   OPTION  The choices. Wrap one in [brackets] to preselect it: pressing
+#           Enter then picks all bracketed options. Without brackets, Enter
+#           picks nothing.
+#
+# The user types numbers separated by spaces or commas (e.g. "1 3"), "a" for
+# all options, "n" for none, or Enter for the defaults.
+#
+# Output:
+#   stdout  The chosen options, without brackets. Nothing else.
+#   stderr  The menu and any error messages.
+#
+# Returns:
+#   0 on a valid answer, 1 if input ends (Ctrl-D).
+choose_multiple() {
+    local prompt="$1"
+    shift
+
+    local options=() is_default=()
+    local re='^\[(.*)\]$'
+    local opt i=0 any_default=0
+
+    for opt in "$@"; do
+        if [[ "$opt" =~ $re ]]; then
+            opt="${BASH_REMATCH[1]}"
+            is_default[i]=1
+            any_default=1
+        else
+            is_default[i]=0
+        fi
+        options+=("$opt")
+        i=$((i + 1))
+    done
+
+    local hint="Numbers separated by space, 'a' = all, 'n' = none, Enter = none: "
+    if (( any_default )); then
+        hint="Numbers separated by space, 'a' = all, 'n' = none, Enter = defaults: "
+    fi
+
+    local reply token mark valid
+    local chosen=()
+
+    while true; do
+        echo "$prompt" >&2
+        for i in "${!options[@]}"; do
+            mark=""
+            if (( is_default[i] )); then
+                mark=" (default)"
+            fi
+            printf '  %d) %s%s\n' "$((i + 1))" "${options[i]}" "$mark" >&2
+        done
+
+        read -r -p "${hint}" reply </dev/tty || return 1
+
+        valid=1
+        for i in "${!options[@]}"; do chosen[i]=0; done
+
+        if [[ -z "${reply//[[:space:]]/}" ]]; then
+            # Enter alone: take the defaults
+            for i in "${!options[@]}"; do chosen[i]=${is_default[i]}; done
+        else
+            for token in ${reply//,/ }; do
+                if [[ "${token,,}" == "a" ]]; then
+                    for i in "${!options[@]}"; do chosen[i]=1; done
+                elif [[ "${token,,}" == "n" ]]; then
+                    for i in "${!options[@]}"; do chosen[i]=0; done
+                elif [[ "$token" =~ ^[0-9]+$ ]] && (( 10#$token >= 1 && 10#$token <= ${#options[@]} )); then
+                    chosen[10#$token - 1]=1
+                else
+                    valid=0
+                    break
+                fi
+            done
+        fi
+
+        if (( valid )); then
+            for i in "${!options[@]}"; do
+                if (( chosen[i] )); then
+                    echo "${options[i]}"
+                fi
+            done
+            return 0
+        fi
+        log_err "Invalid selection."
+    done
+}
+
 
 # REPO_ROOT: resolved relative to this file (scripts/install/lib.sh -> repo root
 # is two directories up). Phase scripts source this file first, so they can

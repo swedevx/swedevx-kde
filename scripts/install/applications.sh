@@ -65,6 +65,31 @@ install_browser() {
     esac
 }
 
+# --- LibreOffice (Fedora only) ---
+
+# install_libreoffice
+#
+# Asks which LibreOffice parts to install (type "a" for the full suite) and
+# installs each as libreoffice-<part>. Fedora only: other distros skip it.
+install_libreoffice() {
+    if [[ "${PKG_MANAGER}" != "dnf" ]]; then
+        return 0
+    fi
+
+    local selected part
+    selected=$(choose_multiple "Choose the LibreOffice parts to install" \
+        "[Writer]" "[Calc]" "[Impress]" "Draw" "Math" "Base") || return 1
+
+    if [[ -z "${selected}" ]]; then
+        log_info "No LibreOffice parts chosen!"
+        return 0
+    fi
+
+    while IFS= read -r part; do
+        pkg_install_if_missing "libreoffice-${part,,}"
+    done <<< "${selected}"
+}
+
 install_work_apps() {
     log_info "No work-specific apps defined yet, skipping."
 }
@@ -78,6 +103,7 @@ main() {
 
     # Install on both profiles
     install_browser
+    install_libreoffice
 
     case "${INSTALL_PROFILE}" in
         work)     install_work_apps ;;
