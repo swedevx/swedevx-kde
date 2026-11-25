@@ -12,9 +12,9 @@ set_virtual_desktops() {
     kde_set kwinrc Desktops Number 3
     kde_set kwinrc Desktops Rows 1
 
-    kde_set kwinrc Desktops Name_1 "Main"
-    kde_set kwinrc Desktops Name_2 "Terminal"
-    kde_set kwinrc Desktops Name_3 "Browser"
+    kde_set kwinrc Desktops Name_1 "1"
+    kde_set kwinrc Desktops Name_2 "2"
+    kde_set kwinrc Desktops Name_3 "3"
 
     # Show animation when switching: checked, effect "Slide".
     kde_set kwinrc Plugins slideEnabled true

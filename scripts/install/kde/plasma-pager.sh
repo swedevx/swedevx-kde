@@ -29,4 +29,7 @@ set_plasma_pager() {
 
     # Selecting current virtual desktop: Shows the desktop.
     kde_set "${rc}" "$@" Configuration General currentDesktopSelected ShowDesktop
+
+    # Show only current screen: checked.
+    kde_set "${rc}" "$@" Configuration General showOnlyCurrentScreen true
 }
