@@ -15,6 +15,10 @@ source "${KDE_DIR}/lib-kde.sh"
 source "${KDE_DIR}/virtual-desktops.sh"
 # shellcheck source=plasma-pager.sh
 source "${KDE_DIR}/plasma-pager.sh"
+
+# shellcheck source=widgets/lock-logout-widget.sh
+source "${KDE_DIR}/widgets/lock-logout-widget.sh"
+
 # shellcheck source=keyboard-shortcuts.sh
 source "${KDE_DIR}/application-shortcuts.sh"
 # shellcheck source=window_management_shortcuts.sh
@@ -33,6 +37,7 @@ install_kde_settings() {
 
     set_virtual_desktops
     set_plasma_pager
+    set_lock_logout_widget
     set_application_shortcuts
     set_window_management_shortcuts
 

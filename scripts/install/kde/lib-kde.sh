@@ -38,3 +38,39 @@ kde_applet_groups() {
     [[ -n "${groups}" ]] || return 1
     echo "${groups}"
 }
+
+# kde_add_panel_widget PLUGIN [KEY=VALUE...]
+#
+# Adds the widget to the first panel and writes each KEY=VALUE to its
+# "General" config group. Skipped if a widget with that plugin id already
+# exists, so re-runs change nothing. true/false are written as booleans,
+# everything else as strings. Values must not contain single quotes.
+# Needs a running Plasma session (it talks to plasmashell over D-Bus).
+kde_add_panel_widget() {
+    local plugin="$1"
+    shift
+    local qdbus js pair key value
+
+    if kde_applet_groups "${plugin}" >/dev/null; then
+        log_ok "${plugin} already in a panel, skipping."
+        return 0
+    fi
+
+    if ! qdbus=$(command -v qdbus6 || command -v qdbus-qt6); then
+        log_warn "qdbus6 not found, cannot add ${plugin}."
+        return 1
+    fi
+
+    js="var p = panels()[0]; if (p) { var w = p.addWidget('${plugin}'); w.currentConfigGroup = ['General'];"
+    for pair in "$@"; do
+        key="${pair%%=*}"
+        value="${pair#*=}"
+        case "${value}" in
+            true|false) js+=" w.writeConfig('${key}', ${value});" ;;
+            *)          js+=" w.writeConfig('${key}', '${value}');" ;;
+        esac
+    done
+    js+=" }"
+
+    "${qdbus}" org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript "${js}" >/dev/null
+}
