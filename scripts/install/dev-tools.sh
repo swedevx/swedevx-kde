@@ -11,7 +11,7 @@ source "${SCRIPT_DIR}/lib.sh"
 # Fedora names the package after the major version. Arch's dotnet-sdk needs
 # no hook, since the logical name already matches.
 pkg_name_dotnet-sdk_dnf() {
-    echo "dotnet-sdk-10.0"
+    echo "dotnet-sdk-11.0"
 }
 
 # install_dotnet_sdk
